@@ -42,30 +42,16 @@ test('it renders with css class', function(assert) {
   assert.equal(this.$('.awesome-li').length, 1);
 });
 
-test('it call passed action on click', function(assert) {
-  assert.expect(1);
-
-  this.set('clickAction', () => assert.ok(true, 'action got called'));
-  this.render(hbs`
-    {{#simple-list-item selectItem=clickAction}}
-       Item
-    {{/simple-list-item}}
-  `);
-
-  // Click on component itself
-  this.$().children().click();
-});
-
 test('it call passed action on click and send item data', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
-  this.set('itemData', 'item data string');
-  this.set('clickAction', (_component, item) => {
+  this.set('itemSelected', (_component, item) => {
+    assert.ok(true, 'action got called');
     assert.equal(item, this.get('itemData'));
   });
 
   this.render(hbs`
-    {{#simple-list-item selectItem=clickAction item=itemData}}
+    {{#simple-list-item item=itemData itemSelected=(action itemSelected) }}
        Item
     {{/simple-list-item}}
   `);
