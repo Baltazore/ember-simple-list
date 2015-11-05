@@ -4,9 +4,19 @@ import layout from '../templates/components/simple-list';
 export default Ember.Component.extend({
   layout: layout,
 
+  didReceiveAttrs() {
+    this.set('selectedItem', null);
+  },
+
+  currentItem: Ember.computed('selectedItem', function() {
+    return this.get('selectedItem');
+  }),
+
   actions: {
+
     itemSelected(item, itemData) {
-      // TODO: set class to active item and reload classes for ohters
+      this.set('selectedItem', item);
     }
+
   }
 });

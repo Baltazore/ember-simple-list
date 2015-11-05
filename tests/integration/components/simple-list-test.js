@@ -29,27 +29,29 @@ test('it renders with tags', function(assert) {
   assert.equal(this.$('li:last').text().trim(), 'Item 2');
 });
 
-// test('it set passed selected class to selected item', function(assert) {
-//   assert.expect(2);
+test('it set passed selected class to selected item', function(assert) {
+  assert.expect(2);
 
-//   this.set('selected', 'simple-selected');
-//   this.set('tag', 'ul');
-//   this.set('itemTag', 'li');
+  this.set('selected', 'simple-selected');
+  this.set('tag', 'ul');
+  this.set('itemTag', 'li');
 
-//   this.render(hbs`
-//     {{#simple-list tagName=tag selectedClass=selected as |itemSelected|}}
-//        {{#simple-list-item tagName=itemTag itemSelected=itemSelected}}
-//            Item 1
-//        {{/simple-list-item}}
-//        {{#simple-list-item tagName=itemTag itemSelected=itemSelected}}
-//            Item 2
-//        {{/simple-list-item}}
-//     {{/simple-list}}
-//   `);
+  this.render(hbs`
+    {{#simple-list tagName=tag selectedClass=selected as |itemSelected current|}}
 
-//   this.$('li:first').click();
-//   assert.equal(this.$('.simple-selected').text().trim(), 'Item 1');
+       {{#simple-list-item tagName=itemTag itemSelected=itemSelected selected=current}}
+           Item 1
+       {{/simple-list-item}}
+       {{#simple-list-item tagName=itemTag itemSelected=itemSelected selected=current}}
+           Item 2
+       {{/simple-list-item}}
 
-//   this.$('li:first').click();
-//   assert.equal(this.$('.simple-selected').text().trim(), 'Item 2');
-// });
+    {{/simple-list}}
+  `);
+
+  this.$('li:first').click();
+  assert.equal(this.$('.active').text().trim(), 'Item 1');
+
+  this.$('li:last').click();
+  assert.equal(this.$('.active').text().trim(), 'Item 2');
+});
