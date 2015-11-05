@@ -13,11 +13,17 @@ export default Ember.Component.extend({
     if (this.attrs.selected) {
       this.set('active', this.attrs.selected.value === this);
     } else {
+      this.selectItem();
+    }
+  },
+
+  selectItem() {
+    if (this.attrs.itemSelected) {
       this.attrs.itemSelected(this, this.get('itemData'));
     }
   },
 
   click() {
-    this.attrs.itemSelected(this, this.get('itemData'));
+    this.selectItem();
   }
 });

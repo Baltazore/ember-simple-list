@@ -42,7 +42,7 @@ test('it renders with css class', function(assert) {
   assert.equal(this.$('.awesome-li').length, 1);
 });
 
-test('it call passed action on click and send item data', function(assert) {
+test('it call passed action on click and send item data by default', function(assert) {
   assert.expect(2);
 
   this.set('itemSelected', (_component, item) => {
@@ -55,7 +55,4 @@ test('it call passed action on click and send item data', function(assert) {
        Item
     {{/simple-list-item}}
   `);
-
-  // Click on component itself
-  this.$().children().click();
 });
