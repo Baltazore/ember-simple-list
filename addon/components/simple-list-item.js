@@ -5,6 +5,16 @@ export default Ember.Component.extend({
   isActive: false,
   selectedClass: 'active',
 
+  selectItem() {
+    if (this.attrs['on-select']) {
+      let selectedClass = this.attrs['on-select'](this, this.get('itemData'));
+
+      if(selectedClass && selectedClass.value) {
+        this.set('selectedClass', selectedClass.value);
+      }
+    }
+  },
+
   didReceiveAttrs () {
     if (this.attrs.item) {
       this.set('itemData', this.attrs.item.value);
@@ -18,16 +28,6 @@ export default Ember.Component.extend({
       }
     } else {
       this.selectItem();
-    }
-  },
-
-  selectItem() {
-    if (this.attrs.itemSelected) {
-      let selectedClass = this.attrs.itemSelected(this, this.get('itemData'));
-
-      if(selectedClass && selectedClass.value) {
-        this.set('selectedClass', selectedClass.value);
-      }
     }
   },
 

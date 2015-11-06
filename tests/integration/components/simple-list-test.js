@@ -38,10 +38,10 @@ test('it set default active class to selected item', function(assert) {
   this.render(hbs`
     {{#simple-list tagName=tag as |itemSelected current|}}
 
-       {{#simple-list-item tagName=itemTag itemSelected=itemSelected selected=current}}
+       {{#simple-list-item tagName=itemTag on-select=itemSelected selected=current}}
            Item 1
        {{/simple-list-item}}
-       {{#simple-list-item tagName=itemTag itemSelected=itemSelected selected=current}}
+       {{#simple-list-item tagName=itemTag on-select=itemSelected selected=current}}
            Item 2
        {{/simple-list-item}}
 
@@ -65,10 +65,10 @@ test('it set passed selected class to selected item', function(assert) {
   this.render(hbs`
     {{#simple-list tagName=tag selectedClass=selectedClass as |itemSelected current|}}
 
-       {{#simple-list-item tagName=itemTag itemSelected=itemSelected selected=current}}
+       {{#simple-list-item tagName=itemTag on-select=itemSelected selected=current}}
            Item 1
        {{/simple-list-item}}
-       {{#simple-list-item tagName=itemTag itemSelected=itemSelected selected=current}}
+       {{#simple-list-item tagName=itemTag on-select=itemSelected selected=current}}
            Item 2
        {{/simple-list-item}}
 

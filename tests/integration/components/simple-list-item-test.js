@@ -51,7 +51,7 @@ test('it call passed action on click and send item data by default', function(as
   });
 
   this.render(hbs`
-    {{#simple-list-item item=itemData itemSelected=(action itemSelected) }}
+    {{#simple-list-item item=itemData on-select=(action itemSelected) }}
        Item
     {{/simple-list-item}}
   `);
