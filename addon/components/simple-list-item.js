@@ -1,17 +1,21 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNameBindings: ['active'],
+  classNameBindings: ['isActive'],
+  isActive: false,
+  selectedClass: 'active',
 
   didReceiveAttrs () {
-    this.set('active', false);
-
     if (this.attrs.item) {
       this.set('itemData', this.attrs.item.value);
     }
 
     if (this.attrs.selected) {
-      this.set('active', this.attrs.selected.value === this);
+      if(this.attrs.selected.value === this) {
+        this.set('isActive', this.get('selectedClass'));
+      } else {
+        this.set('isActive', false);
+      }
     } else {
       this.selectItem();
     }
@@ -19,7 +23,11 @@ export default Ember.Component.extend({
 
   selectItem() {
     if (this.attrs.itemSelected) {
-      this.attrs.itemSelected(this, this.get('itemData'));
+      let selectedClass = this.attrs.itemSelected(this, this.get('itemData'));
+
+      if(selectedClass && selectedClass.value) {
+        this.set('selectedClass', selectedClass.value);
+      }
     }
   },
 

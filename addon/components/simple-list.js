@@ -16,6 +16,8 @@ export default Ember.Component.extend({
 
     itemSelected(item, itemData) {
       this.set('selectedItem', item);
+
+      return this.attrs.selectedClass;
     }
 
   }
