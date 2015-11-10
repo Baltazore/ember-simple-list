@@ -12,7 +12,7 @@ export default Ember.Component.extend({
   actions: {
     registerItem(item) {
       if(this.get('items').length === 0) {
-        item.activate(this.attrs.selectedClass);
+        item.activate();
       }
       this.get('items').pushObject(item);
     },
@@ -22,7 +22,7 @@ export default Ember.Component.extend({
       this.get('items').without(item).forEach(item => item.deactivate());
 
       // Set active class to selected item
-      item.activate(this.attrs.selectedClass);
+      item.activate();
     }
   }
 
