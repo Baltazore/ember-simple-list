@@ -4,15 +4,21 @@ import layout from '../templates/components/simple-list';
 export default Ember.Component.extend({
   layout: layout,
   items: Ember.A([]),
+  selected: Ember.Object.create({item: null}),
 
   willDestroyElement() {
     this.get('items').clear();
   },
 
+  activateItem(item) {
+    item.activate();
+    this.set('selected.item', item.get('itemData'));
+  },
+
   actions: {
     registerItem(item) {
       if(this.get('items').length === 0) {
-        item.activate();
+        this.activateItem(item);
       }
       this.get('items').pushObject(item);
     },
@@ -22,7 +28,7 @@ export default Ember.Component.extend({
       this.get('items').without(item).forEach(item => item.deactivate());
 
       // Set active class to selected item
-      item.activate();
+      this.activateItem(item);
     }
   }
 

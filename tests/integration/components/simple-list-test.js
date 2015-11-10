@@ -1,6 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
+import Ember from 'ember';
+
 moduleForComponent('simple-list', 'Integration | Component | simple list', {
   integration: true
 });
@@ -113,4 +115,30 @@ test('it sends passed on-select actions within context', function(assert) {
 
   this.$('li:first').click();
   this.$('li:last').click();
+});
+
+
+test('it sets selected object when item selected', function(assert) {
+  assert.expect(2);
+
+  this.set('s', Ember.Object.create({}));
+
+  this.render(hbs`
+    {{#simple-list tagName='ul' selected=s as |list|}}
+
+       {{#simple-list-item tagName='li' list=list item='first' }}
+           Item 1
+       {{/simple-list-item}}
+
+       {{#simple-list-item tagName='li' list=list item='second'}}
+           Item 2
+       {{/simple-list-item}}
+
+    {{/simple-list}}
+  `);
+
+  this.$('li:first').click();
+  assert.equal(this.get('s.item'), 'first');
+  this.$('li:last').click();
+  assert.equal(this.get('s.item'), 'second');
 });
