@@ -3,22 +3,27 @@ import layout from '../templates/components/simple-list';
 
 export default Ember.Component.extend({
   layout: layout,
+  items: Ember.A([]),
 
-  didReceiveAttrs() {
-    this.set('selectedItem', null);
+  willDestroyElement() {
+    this.get('items').clear();
   },
 
-  currentItem: Ember.computed('selectedItem', function() {
-    return this.get('selectedItem');
-  }),
-
   actions: {
+    registerItem(item) {
+      if(this.get('items').length === 0) {
+        item.activate(this.attrs.selectedClass);
+      }
+      this.get('items').pushObject(item);
+    },
 
-    itemSelected(item, itemData) {
-      this.set('selectedItem', item);
+    itemSelected(item) {
+      // Remove active class form other items
+      this.get('items').without(item).forEach(item => item.deactivate());
 
-      return this.attrs.selectedClass;
+      // Set active class to selected item
+      item.activate(this.attrs.selectedClass);
     }
-
   }
+
 });

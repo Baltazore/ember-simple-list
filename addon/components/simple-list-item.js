@@ -5,37 +5,45 @@ export default Ember.Component.extend({
   isActive: false,
   selectedClass: 'active',
 
+  list: Ember.computed({
+    get() {
+      if (this.attrs.list && this.attrs.list.value) {
+        return this.attrs.list.value;
+      } else {
+        return null;
+      }
+    }
+  }),
+
   didReceiveAttrs () {
     if (this.attrs.item && this.attrs.item.value) {
       this.set('itemData', this.attrs.item.value);
     }
 
-    if (this.attrs.selected && this.attrs.selected.value) {
-      this.setActiveClass();
-    } else {
-      this.selectItem();
-      // Force to set active class on first item
+    if(this.get('list')) {
+      if(this.get('list').selectedClass) {
+        this.set('selectedClass', this.get('list').selectedClass);
+      }
+
+      this.get('list').send('registerItem', this);
+    }
+  },
+
+  activate() {
+    if(!this.get('isActive')) {
       this.set('isActive', this.get('selectedClass'));
     }
   },
 
-  setActiveClass() {
-    if(this.attrs.selected.value === this) {
-      this.set('isActive', this.get('selectedClass'));
-    } else {
+  deactivate() {
+    if(this.get('isActive')) {
       this.set('isActive', false);
     }
   },
 
   selectItem() {
-    if (this.attrs.itemSelected) {
-      let selectedClass = this.attrs.itemSelected(this);
-
-      if(selectedClass && selectedClass.value) {
-        this.set('selectedClass', selectedClass.value);
-      }
-
-      this.set('isActive', this.get('selectedClass'));
+    if (this.get('list')) {
+      this.get('list').send("itemSelected", this);
     }
   },
 
