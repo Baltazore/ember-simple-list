@@ -52,7 +52,7 @@ export default Ember.Component.extend({
 
     if (onSelect) {
       if (typeof onSelect === 'string') {
-        this.sendAction(onSelect, this.get('itemData'));
+        this.sendAction('on-select', this.get('itemData'));
       } else {
         onSelect(this.get('itemData'));
       }

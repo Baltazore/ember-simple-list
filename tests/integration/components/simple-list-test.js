@@ -95,7 +95,7 @@ test('it sends passed on-select actions within context', function(assert) {
   assert.expect(2);
 
   this.set('onItem1', () => assert.ok(true, 'First Item selected'));
-  this.set('onItem2', () => assert.ok(true, 'Second Item selected'));
+  this.on('onItem2', () => assert.ok(true, 'Second Item selected'));
 
   this.render(hbs`
     {{#simple-list tagName='ul' as |list|}}
@@ -104,7 +104,7 @@ test('it sends passed on-select actions within context', function(assert) {
            Item 1
        {{/simple-list-item}}
 
-       {{#simple-list-item tagName='li' list=list on-select=(action onItem2)}}
+       {{#simple-list-item tagName='li' list=list on-select="onItem2"}}
            Item 2
        {{/simple-list-item}}
 

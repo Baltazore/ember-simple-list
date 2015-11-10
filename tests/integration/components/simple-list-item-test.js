@@ -42,7 +42,7 @@ test('it renders with css class', function(assert) {
   assert.equal(this.$('.awesome-li').length, 1);
 });
 
-test('it call passed action on click and send item data by default', function(assert) {
+test('it call passed closure action on click and send item data by default', function(assert) {
   assert.expect(2);
 
   const itemData = 'itemDataString';
@@ -60,3 +60,24 @@ test('it call passed action on click and send item data by default', function(as
 
   this.$().children().click();
 });
+
+test('it call passed action on click and send item data by default', function(assert) {
+  assert.expect(2);
+
+  const itemData = 'itemDataString';
+  this.set('itemData', itemData);
+
+  this.on('onSelectItem', (item) => {
+    assert.ok(true, 'action got called');
+    assert.equal(item, itemData);
+  });
+
+  this.render(hbs`
+    {{#simple-list-item item=itemData on-select='onSelectItem' }}
+       Item
+    {{/simple-list-item}}
+  `);
+
+  this.$().children().click();
+});
+ 
