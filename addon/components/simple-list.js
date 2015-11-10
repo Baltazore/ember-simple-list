@@ -12,6 +12,7 @@ export default Component.extend({
   layout: layout,
   items: A([]),
   selected: Object.create({item: null}),
+  initSelectedItemNum: 0,
 
   _clear: on('willDestroyElement', function() {
     this.get('items').clear();
@@ -24,7 +25,7 @@ export default Component.extend({
 
   actions: {
     registerItem(item) {
-      if(this.get('items').length === 0) {
+      if(this.get('items').length === this.get('initSelectedItemNum')) {
         this.activateItem(item);
       }
       this.get('items').pushObject(item);

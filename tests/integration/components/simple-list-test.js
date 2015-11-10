@@ -142,3 +142,23 @@ test('it sets selected object when item selected', function(assert) {
   this.$('li:last').click();
   assert.equal(this.get('s.item'), 'second');
 });
+
+test('it sets active tab by initSelectedItemNum', function(assert) {
+  assert.expect(1);
+
+  this.render(hbs`
+    {{#simple-list initSelectedItemNum=1 as |list|}}
+
+       {{#simple-list-item list=list}}
+           Item 1
+       {{/simple-list-item}}
+
+       {{#simple-list-item list=list}}
+           Item 2
+       {{/simple-list-item}}
+
+    {{/simple-list}}
+  `);
+
+  assert.equal(this.$('.active').text().trim(), 'Item 2');
+});
