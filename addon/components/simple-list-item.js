@@ -1,11 +1,17 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  on
+} = Ember;
+
+export default Component.extend({
   classNameBindings: ['isActive'],
   isActive: false,
   selectedClass: 'active',
 
-  list: Ember.computed({
+  list: computed({
     get() {
       if (this.attrs.list && this.attrs.list.value) {
         return this.attrs.list.value;
@@ -14,25 +20,6 @@ export default Ember.Component.extend({
       }
     }
   }),
-
-  didReceiveAttrs () {
-    if (this.attrs.item) {
-      if (typeof this.attrs.item === 'string') {
-        this.set('itemData', this.attrs.item);
-      } else {
-        this.set('itemData', this.attrs.item.value);
-      }
-
-    }
-
-    if(this.get('list')) {
-      if(this.get('list').selectedClass) {
-        this.set('selectedClass', this.get('list').selectedClass);
-      }
-
-      this.get('list').send('registerItem', this);
-    }
-  },
 
   activate() {
     if(!this.get('isActive')) {
@@ -48,7 +35,7 @@ export default Ember.Component.extend({
 
   selectItem() {
     if (this.get('list')) {
-      this.get('list').send("itemSelected", this);
+      this.get('list').send('selectItem', this);
     }
   },
 
@@ -64,9 +51,26 @@ export default Ember.Component.extend({
     }
   },
 
-  click() {
-    this.selectItem();
+  _receivedAttrs: on('didReceiveAttrs', function() {
+    if (this.attrs.item) {
+      if (typeof this.attrs.item === 'string') {
+        this.set('itemData', this.attrs.item);
+      } else {
+        this.set('itemData', this.attrs.item.value);
+      }
+    }
 
+    if(this.get('list')) {
+      if(this.get('list').selectedClass) {
+        this.set('selectedClass', this.get('list').selectedClass);
+      }
+
+      this.get('list').send('registerItem', this);
+    }
+  }),
+
+  _select: on('click', function() {
+    this.selectItem();
     this.onSelectAction();
-  }
+  })
 });
