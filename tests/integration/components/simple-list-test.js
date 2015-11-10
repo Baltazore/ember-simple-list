@@ -90,3 +90,27 @@ test('it set passed selected class to selected item', function(assert) {
   assert.equal(this.$('.simple-selected').length, 1);
   assert.equal(this.$('.simple-selected').text().trim(), 'Item 2');
 });
+
+test('it sends passed on-select actions within context', function(assert) {
+  assert.expect(2);
+
+  this.set('onItem1', () => assert.ok(true, 'First Item selected'));
+  this.set('onItem2', () => assert.ok(true, 'Second Item selected'));
+
+  this.render(hbs`
+    {{#simple-list tagName='ul' as |list|}}
+
+       {{#simple-list-item tagName='li' list=list on-select=(action onItem1)}}
+           Item 1
+       {{/simple-list-item}}
+
+       {{#simple-list-item tagName='li' list=list on-select=(action onItem2)}}
+           Item 2
+       {{/simple-list-item}}
+
+    {{/simple-list}}
+  `);
+
+  this.$('li:first').click();
+  this.$('li:last').click();
+});
