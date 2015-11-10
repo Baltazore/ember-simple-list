@@ -45,14 +45,18 @@ test('it renders with css class', function(assert) {
 test('it call passed action on click and send item data by default', function(assert) {
   assert.expect(2);
 
-  this.set('itemSelected', (_component, item) => {
+  const itemData = 'itemDataString';
+  this.set('itemData', itemData);
+  this.set('onSelectItem', (item) => {
     assert.ok(true, 'action got called');
-    assert.equal(item, this.get('itemData'));
+    assert.equal(item, itemData);
   });
 
   this.render(hbs`
-    {{#simple-list-item item=itemData on-select=(action itemSelected) }}
+    {{#simple-list-item item=itemData on-select=(action onSelectItem) }}
        Item
     {{/simple-list-item}}
   `);
+
+  this.$().children().click();
 });

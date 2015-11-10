@@ -38,10 +38,10 @@ test('it set default active class to selected item', function(assert) {
   this.render(hbs`
     {{#simple-list tagName=tag as |itemSelected current|}}
 
-       {{#simple-list-item tagName=itemTag on-select=itemSelected selected=current}}
+       {{#simple-list-item tagName=itemTag itemSelected=itemSelected selected=current}}
            Item 1
        {{/simple-list-item}}
-       {{#simple-list-item tagName=itemTag on-select=itemSelected selected=current}}
+       {{#simple-list-item tagName=itemTag itemSelected=itemSelected selected=current}}
            Item 2
        {{/simple-list-item}}
 
@@ -56,7 +56,7 @@ test('it set default active class to selected item', function(assert) {
 });
 
 test('it set passed selected class to selected item', function(assert) {
-  assert.expect(2);
+  assert.expect(5);
 
   this.set('selectedClass', 'simple-selected');
   this.set('tag', 'ul');
@@ -65,19 +65,20 @@ test('it set passed selected class to selected item', function(assert) {
   this.render(hbs`
     {{#simple-list tagName=tag selectedClass=selectedClass as |itemSelected current|}}
 
-       {{#simple-list-item tagName=itemTag on-select=itemSelected selected=current}}
+       {{#simple-list-item tagName=itemTag itemSelected=itemSelected selected=current}}
            Item 1
-       {{/simple-list-item}}
-       {{#simple-list-item tagName=itemTag on-select=itemSelected selected=current}}
-           Item 2
        {{/simple-list-item}}
 
     {{/simple-list}}
   `);
 
+  assert.equal(this.$('.simple-selected').length, 1);
+
   this.$('li:first').click();
+  assert.equal(this.$('.simple-selected').length, 1);
   assert.equal(this.$('.simple-selected').text().trim(), 'Item 1');
 
   this.$('li:last').click();
+  assert.equal(this.$('.simple-selected').length, 1);
   assert.equal(this.$('.simple-selected').text().trim(), 'Item 2');
 });
