@@ -16,8 +16,13 @@ export default Ember.Component.extend({
   }),
 
   didReceiveAttrs () {
-    if (this.attrs.item && this.attrs.item.value) {
-      this.set('itemData', this.attrs.item.value);
+    if (this.attrs.item) {
+      if (typeof this.attrs.item === 'string') {
+        this.set('itemData', this.attrs.item);
+      } else {
+        this.set('itemData', this.attrs.item.value);
+      }
+
     }
 
     if(this.get('list')) {

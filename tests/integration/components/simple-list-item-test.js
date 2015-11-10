@@ -64,16 +64,13 @@ test('it call passed closure action on click and send item data by default', fun
 test('it call passed action on click and send item data by default', function(assert) {
   assert.expect(2);
 
-  const itemData = 'itemDataString';
-  this.set('itemData', itemData);
-
   this.on('onSelectItem', (item) => {
     assert.ok(true, 'action got called');
-    assert.equal(item, itemData);
+    assert.equal(item, 'itemDataString');
   });
 
   this.render(hbs`
-    {{#simple-list-item item=itemData on-select='onSelectItem' }}
+    {{#simple-list-item item='itemDataString' on-select='onSelectItem' }}
        Item
     {{/simple-list-item}}
   `);
