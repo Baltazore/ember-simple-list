@@ -48,8 +48,14 @@ export default Ember.Component.extend({
   },
 
   onSelectAction() {
-    if (this.attrs['on-select']) {
-      this.attrs['on-select'](this.get('itemData'));
+    let onSelect = this.attrs['on-select'];
+
+    if (onSelect) {
+      if (typeof onSelect === 'string') {
+        this.sendAction(onSelect, this.get('itemData'));
+      } else {
+        onSelect(this.get('itemData'));
+      }
     }
   },
 
