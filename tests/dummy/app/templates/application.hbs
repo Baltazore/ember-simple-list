@@ -1,3 +1,38 @@
-<h2 id="title">Welcome to Ember</h2>
+<h2 id="title">Welcome to Ember Simple list</h2>
 
-{{outlet}}
+<h3>Simple list</h3>
+
+{{#simple-list tagName="ul" as |list| }}
+
+    {{#simple-list-item tagName="li" list=list}}
+        Item 1
+    {{/simple-list-item}}
+
+    {{#simple-list-item tagName="li" list=list}}
+        Item 2
+    {{/simple-list-item}}
+
+    {{#simple-list-item tagName="li" list=list}}
+        Item 3
+    {{/simple-list-item}}
+
+{{/simple-list}}
+
+
+<h3>Simple list with Initial selected element</h3>
+
+{{#simple-list tagName="ul" initSelectedItemNum=1 as |list| }}
+
+    {{#simple-list-item tagName="li" list=list}}
+        Item 1
+    {{/simple-list-item}}
+
+    {{#simple-list-item tagName="li" list=list}}
+        Item 2
+    {{/simple-list-item}}
+
+    {{#simple-list-item tagName="li" list=list}}
+        Item 3
+    {{/simple-list-item}}
+
+{{/simple-list}}

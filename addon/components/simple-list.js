@@ -3,17 +3,19 @@ import layout from '../templates/components/simple-list';
 
 const {
   Component,
-  A,
   on
 } = Ember;
 
 export default Component.extend({
   layout: layout,
-  items: new A([]),
   selected: Ember.Object.create({item: null}),
   initSelectedItemNum: 0,
 
-  _clear: on('willDestroyElement', function() {
+  _initialize: on('init', function() {
+    this.set('items', Ember.A([]));
+  }),
+
+  _teardown: on('willDestroyElement', function() {
     this.get('items').clear();
   }),
 

@@ -1,0 +1,11 @@
+.active {
+  color: red;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  cursor: pointer;
+}
