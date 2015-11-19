@@ -1,6 +1,6 @@
 {
   "name": "ember-simple-list",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Simple Ember-CLI addon to manage list of items.",
   "directories": {
     "doc": "doc",
