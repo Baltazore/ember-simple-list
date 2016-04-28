@@ -1,27 +1,40 @@
 import Ember from 'ember';
 import layout from '../templates/components/simple-list';
 
-const {
-  Component,
-  on
-} = Ember;
+const { Component, Object: emObj, A: emArr } = Ember;
 
 export default Component.extend({
-  layout: layout,
-  selected: Ember.Object.create({item: null}),
-  initSelectedItemNum: 0,
+  layout,
 
-  _initialize: on('init', function() {
-    this.set('items', Ember.A([]));
-  }),
+  initSelectedItemNum: 0, // injected
+  selectedClass: null, // injected
+  selected: emObj.create({ item: null }),
 
-  _teardown: on('willDestroyElement', function() {
+  init() {
+    this._super(...arguments);
+    this.set('items', emArr([]));
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+
     this.get('items').clear();
-  }),
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    
+    let itemIndex = this.get('initSelectedItemNum');
+    let newSelectedItem = this.get('items')[itemIndex];
+    if (newSelectedItem) {
+      this.activateItem(newSelectedItem);
+    }
+  },
 
   activateItem(item) {
     item.activate();
-    this.set('selected.item', item.get('itemData'));
+    this.get('items').without(item).forEach((item) => item.deactivate());
+    this.set('selected.item', item.get('item'));
   },
 
   actions: {

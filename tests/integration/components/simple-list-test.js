@@ -144,10 +144,11 @@ test('it sets selected object when item selected', function(assert) {
 });
 
 test('it sets active tab by initSelectedItemNum', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
+  this.set('initNum', 1);
   this.render(hbs`
-    {{#simple-list initSelectedItemNum=1 as |list|}}
+    {{#simple-list initSelectedItemNum=initNum as |list|}}
 
        {{#simple-list-item list=list}}
            Item 1
@@ -161,4 +162,6 @@ test('it sets active tab by initSelectedItemNum', function(assert) {
   `);
 
   assert.equal(this.$('.active').text().trim(), 'Item 2');
+  this.set('initNum', 0);
+  assert.equal(this.$('.active').text().trim(), 'Item 1');
 });
